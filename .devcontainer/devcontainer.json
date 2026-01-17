@@ -12,10 +12,18 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "llvm-vs-code-extensions.vscode-clangd",
         "ms-vscode.cpptools",
         "ms-vscode.makefile-tools"
       ],
       "settings": {
+        "C_Cpp.intelliSenseEngine": "disabled",
+        "clangd.path": "/usr/bin/clangd",
+        "clangd.arguments": [
+          "--query-driver=/usr/bin/riscv64-unknown-elf-*,riscv64-unknown-elf-*",
+          "--background-index",
+          "--header-insertion=never"
+        ],
         "terminal.integrated.profiles.linux": {
           "zsh": {
             "path": "/usr/bin/zsh"
