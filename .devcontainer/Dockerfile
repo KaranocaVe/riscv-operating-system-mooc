@@ -19,6 +19,7 @@ RUN apt-get update \
     build-essential \
     gcc \
     make \
+    bear \
     perl \
     dkms \
     python3 \
@@ -43,6 +44,9 @@ RUN apt-get update \
     gcc-riscv64-unknown-elf \
     gdb-multiarch \
     qemu-system-misc \
+    clangd \
+    clang-format \
+    clang-tidy \
     less \
     bsdextrautils \
   && rm -rf /var/lib/apt/lists/*
