@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export GDB_USE_GEF=1
+exec gdb-multiarch "$@"
+

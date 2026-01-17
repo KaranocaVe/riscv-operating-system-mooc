@@ -1,0 +1,3 @@
+[gef]
+disable_target_remote_overwrite = True
+

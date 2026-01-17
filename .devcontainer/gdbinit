@@ -1,0 +1,21 @@
+set pagination off
+set confirm off
+
+python
+import os
+import gdb
+
+if os.environ.get("GDB_USE_GEF") == "1":
+    try:
+        gdb.execute("source /opt/gef/gef.py")
+        # GEF's `target remote` hook setup assumes gdbserver features like `remote get`.
+        # For QEMU bare-metal debugging used by this repo, keep `target remote` usable
+        # by silencing the pre-hook that prints errors when overwrite is disabled.
+        try:
+            gdb.execute("define target hook-remote\nend")
+            gdb.execute("define target hook-extended-remote\nend")
+        except gdb.error:
+            pass
+    except Exception as e:
+        gdb.write(f"[devcontainer] Failed to load GEF: {e}\n")
+end
