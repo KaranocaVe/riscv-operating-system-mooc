@@ -1,0 +1,69 @@
+# Devcontainer default zshrc for riscv-operating-system-mooc.
+export RVOS_DEVCONTAINER_ZSHRC=1
+export RVOS_DEVCONTAINER_ZSHRC_VERSION=1
+
+export EDITOR=vim
+export VISUAL=vim
+export PAGER=less
+
+setopt auto_cd
+setopt interactive_comments
+setopt no_beep
+setopt prompt_subst
+
+HISTFILE="${HOME}/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt extended_history
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks
+setopt share_history
+setopt inc_append_history
+
+autoload -Uz colors && colors
+
+alias ls='ls --color=auto'
+alias ll='ls -lah'
+alias la='ls -A'
+alias l='ls -CF'
+alias vi='vim'
+command -v batcat >/dev/null 2>&1 && alias bat='batcat'
+command -v fdfind >/dev/null 2>&1 && alias fd='fdfind'
+
+autoload -Uz compinit
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+mkdir -p "${cache_dir}" 2>/dev/null || true
+compinit -C -d "${cache_dir}/zcompdump-${ZSH_VERSION}"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zmodload zsh/complist
+
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats ' %F{magenta}(%b)%f'
+precmd() { vcs_info }
+PROMPT='%F{cyan}%n@%m%f:%F{yellow}%~%f${vcs_info_msg_0_} %# '
+
+bindkey -e
+
+if command -v fzf >/dev/null 2>&1; then
+  fzf-history-widget() {
+    local selected
+    selected="$(
+      fc -rl 1 \
+        | sed 's/^[[:space:]]*[0-9][0-9]*[[:space:]]*//' \
+        | fzf --tac --no-sort --query="$LBUFFER" --height 40% --reverse
+    )" || return
+    LBUFFER="$selected"
+  }
+  zle -N fzf-history-widget
+  bindkey '^R' fzf-history-widget
+fi
+
+if [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
+if [[ -r /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
