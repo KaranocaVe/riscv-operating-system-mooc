@@ -1,4 +1,43 @@
+# Build artifacts
 *.o
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
 *.bin
 *.elf
-code/os/*/out/
+*.hex
+*.srec
+*.map
+*.lst
+*.d
+*.dis
+*.dump
+
+# Build/output directories
+**/out/
+**/build/
+**/dist/
+
+# Tooling
+compile_commands.json
+**/compile_commands.json
+
+# Debugging / crash dumps
+.gdb_history
+core
+core.*
+
+# Caches
+.cache/
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+.vscode/
+.idea/
+*.code-workspace
