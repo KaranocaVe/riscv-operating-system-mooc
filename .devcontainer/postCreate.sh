@@ -72,3 +72,6 @@ fi
 
 echo "[devcontainer] OK: QEMU printed: Hello, RVOS!"
 rm -f "${log_file}"
+
+echo "[devcontainer] clangd: generate compile_commands.json (bear)"
+bash .devcontainer/gen_compile_commands.sh || true
